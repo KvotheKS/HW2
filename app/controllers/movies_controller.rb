@@ -2,13 +2,18 @@
 class MoviesController < ApplicationController
   def index
     @movies = Movie.all
+    @highliter = {}
+    if(params[:sort_by]) then
+      @movies = @movies.sort_by{|movie| movie[params[:sort_by]]}
+      @highliter[params[:sort_by]] = 'hilite'
+    end
   end
 
   def show
     id = params[:id]
     @movie = Movie.find(id)
   end
-
+   
   def new
     @movie = Movie.new
   end

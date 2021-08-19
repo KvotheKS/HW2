@@ -1,8 +1,19 @@
 # This file is app/controllers/movies_controller.rb
 class MoviesController < ApplicationController
   def index
+    #"movies_temporary"
     @movies = Movie.all
     @highliter = {}
+    @all_ratings = Movie.all_ratings
+
+    #Selecting movies by ratings 
+    if(params[:ratings]) then
+      selected_ratings = []
+      params[:ratings].each{|k,v| selected_ratings << k}
+      @movies = @movies.select{|movie| selected_ratings.include? movie.rating}
+    end
+
+    #sorting movies by title|release date
     if(params[:sort_by]) then
       @movies = @movies.sort_by{|movie| movie[params[:sort_by]]}
       @highliter[params[:sort_by]] = 'hilite'

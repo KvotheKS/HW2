@@ -3,8 +3,23 @@ require 'active_record'
 class Movie < ActiveRecord::Base
   #self.abstract_class = true
   #attr_accessible :title, :rating, :description, :release_date
+  @check_boxes = nil
   def self.all_ratings
      %w(G PG PG-13 NC-17 R)
+  end
+  
+  def self.check_boxes
+    if(!@check_boxes) then
+      @check_boxes = {}
+      self.all_ratings.each do |rating|
+        self.check_boxes[rating]=true
+      end
+    end
+    @check_boxes
+  end
+
+  def self.check_boxes=(a)
+    @check_boxes=a
   end
 end
 # starwars = Movie.create!(:title => 'Star Wars',

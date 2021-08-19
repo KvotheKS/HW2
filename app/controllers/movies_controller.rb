@@ -5,18 +5,23 @@ class MoviesController < ApplicationController
     @movies = Movie.all
     @highliter = {}
     @all_ratings = Movie.all_ratings
-
     #Selecting movies by ratings 
     if(params[:ratings]) then
       selected_ratings = []
       params[:ratings].each{|k,v| selected_ratings << k}
-      @movies = @movies.select{|movie| selected_ratings.include? movie.rating}
+      #Changes check boxes state
+      Movie.all_ratings.each do |rating|
+        Movie.check_boxes[rating] = selected_ratings.include? rating
+      end
     end
-
+    @c_box = Movie.check_boxes
+    @movies = @movies.select{|movie| Movie.check_boxes[movie.rating]}
+      
     #sorting movies by title|release date
     if(params[:sort_by]) then
-      @movies = @movies.sort_by{|movie| movie[params[:sort_by]]}
-      @highliter[params[:sort_by]] = 'hilite'
+      @sort_choice = params[:sort_by]
+      @movies = @movies.sort_by{|movie| movie[@sort_choice]}
+      @highliter[@sort_choice] = 'hilite'
     end
   end
 

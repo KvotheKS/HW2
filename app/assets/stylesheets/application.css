@@ -79,3 +79,14 @@ color: maroon;
 table#movies th.hilite {
   background-color: orangered;
 }
+/*
+  Nao requisitado, porem foi para testar mudancas no flash e no redirect
+*/
+
+nc {
+color: maroon;
+font-size: 150%;
+font-style: italic;
+display: block;
+width: 100%;
+}
